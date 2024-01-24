@@ -42,28 +42,28 @@ namespace Earthquake
 
     public class EntityBase
     {
-        public DateTime Time { get; set; }
-        public decimal Latitude { get; set; }
-        public decimal Longitude { get; set; }
-        public decimal Depth { get; set; }
-        public decimal Mag { get; set; }
-        public string MagType { get; set; }
-        public int Nst { get; set; }
-        public decimal Gap { get; set; }
-        public decimal Dmin { get; set; }
-        public decimal Rms { get; set; }
-        public string Net { get; set; }
-        public string Id { get; set; }
-        public string Updated { get; set; }
-        public string Place { get; set; }
-        public string Type { get; set; }
-        public decimal? HorizontalError { get; set; }
-        public decimal DepthError { get; set; }
-        public decimal? MagError { get; set; }
-        public int? MagNst { get; set; }
-        public string Status { get; set; }
-        public string LocationSource { get; set; }
-        public string MagSource { get; set; }
+        public DateTime time { get; set; }
+        public decimal latitude { get; set; }
+        public decimal longitude { get; set; }
+        public decimal depth { get; set; }
+        public decimal mag { get; set; }
+        public string magtype { get; set; }
+        public int? nst { get; set; }
+        public decimal gap { get; set; }
+        public decimal dmin { get; set; }
+        public decimal rms { get; set; }
+        public string net { get; set; }
+        public string id { get; set; }
+        public string updated { get; set; }
+        public string place { get; set; }
+        public string type { get; set; }
+        public decimal horizontalerror { get; set; }
+        public decimal deptherror { get; set; }
+        public decimal? magerror { get; set; }
+        public int? magnst { get; set; }
+        public string status { get; set; }
+        public string locationsource { get; set; }
+        public string magsource { get; set; }
     }
 
     public class eq2000 : EntityBase { }

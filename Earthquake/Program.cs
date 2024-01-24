@@ -10,6 +10,38 @@ using Microsoft.EntityFrameworkCore;
 
 partial class Program
 {
+    public class EQDBContext : DbContext
+    {
+        public DbSet<eq2000> eq2000 { get; set; }
+        public DbSet<eq2001> eq2001 { get; set; }
+        public DbSet<eq2002> eq2002 { get; set; }
+        public DbSet<eq2003> eq2003 { get; set; }
+        public DbSet<eq2004> eq2004 { get; set; }
+        public DbSet<eq2005> eq2005 { get; set; }
+        public DbSet<eq2006> eq2006 { get; set; }
+        public DbSet<eq2007> eq2007 { get; set; }
+        public DbSet<eq2008> eq2008 { get; set; }
+        public DbSet<eq2009> eq2009 { get; set; }
+        public DbSet<eq2010> eq2010 { get; set; }
+        public DbSet<eq2011> eq2011 { get; set; }
+        public DbSet<eq2012> eq2012 { get; set; }
+        public DbSet<eq2013> eq2013 { get; set; }
+        public DbSet<eq2014> eq2014 { get; set; }
+        public DbSet<eq2015> eq2015 { get; set; }
+        public DbSet<eq2016> eq2016 { get; set; }
+        public DbSet<eq2017> eq2017 { get; set; }
+        public DbSet<eq2018> eq2018 { get; set; }
+        public DbSet<eq2019> eq2019 { get; set; }
+        public DbSet<eq2020> eq2020 { get; set; }
+        public DbSet<eq2021> eq2021 { get; set; }
+        public DbSet<eq2022> eq2022 { get; set; }
+        public DbSet<eq2023> eq2023 { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseNpgsql("Host=localhost;Database=earthquakes;Username=postgres;Password=1891999Spicy;Port=5432;");
+        }
+    }
     static void Main()
     {
         // Ask the user to input filter criteria
@@ -54,7 +86,7 @@ partial class Program
                 int? selectedYear = TryParseInt(filterCriteria.ElementAtOrDefault(0));
                 if (selectedYear.HasValue)
                 {
-                    allTablesQuery = allTablesQuery.Where(e => e.Time.Year == selectedYear);
+                    allTablesQuery = allTablesQuery.Where(e => e.time.Year == selectedYear);
                 }
             }
 
@@ -63,7 +95,7 @@ partial class Program
                 int? selectedMonth = TryParseInt(filterCriteria.ElementAtOrDefault(1));
                 if (selectedMonth.HasValue)
                 {
-                    allTablesQuery = allTablesQuery.Where(e => e.Time.Month == selectedMonth);
+                    allTablesQuery = allTablesQuery.Where(e => e.time.Month == selectedMonth);
                 }
             }
 
@@ -72,7 +104,7 @@ partial class Program
                 string selectedLocation = filterCriteria.ElementAtOrDefault(2)?.Trim();
                 if (!string.IsNullOrEmpty(selectedLocation))
                 {
-                    allTablesQuery = allTablesQuery.Where(e => e.LocationSource.Contains(selectedLocation));
+                    allTablesQuery = allTablesQuery.Where(e => e.locationsource.Contains(selectedLocation));
                 }
             }
 
@@ -81,7 +113,6 @@ partial class Program
             DisplayResults(result);
         }
     }
-
     static IQueryable<EntityBase> ConcatTables<T>(EQDBContext dbContext, DbSet<T> table) where T : EntityBase
     {
         var entityProperties = typeof(T).GetProperties();
@@ -90,28 +121,28 @@ partial class Program
         .AsQueryable()
         .Select(entity => new EntityBase
         {
-            Time = entity.Time,
-            Latitude = entity.Latitude,
-            Longitude = entity.Longitude,
-            Depth = entity.Depth,
-            Mag = entity.Mag,
-            MagType = entity.MagType,
-            Nst = entity.Nst,
-            Gap = entity.Gap,
-            Dmin = entity.Dmin,
-            Rms = entity.Rms,
-            Net = entity.Net,
-            Id = entity.Id,
-            Updated = entity.Updated,
-            Place = entity.Place,
-            Type = entity.Type,
-            HorizontalError = entity.HorizontalError,
-            DepthError = entity.DepthError,
-            MagError = entity.MagError,
-            MagNst = entity.MagNst,
-            Status = entity.Status,
-            LocationSource = entity.LocationSource,
-            MagSource = entity.MagSource
+            time = entity.time,
+            latitude = entity.latitude,
+            longitude = entity.longitude,
+            depth = entity.depth,
+            mag = entity.mag,
+            magtype = entity.magtype,
+            nst = entity.nst,
+            gap = entity.gap,
+            dmin = entity.dmin,
+            rms = entity.rms,
+            net = entity.net,
+            id = entity.id,
+            updated = entity.updated,
+            place = entity.place,
+            type = entity.type,
+            horizontalerror = entity.horizontalerror,
+            deptherror = entity.deptherror,
+            magerror = entity.magerror,
+            magnst = entity.magnst,
+            status = entity.status,
+            locationsource = entity.locationsource,
+            magsource = entity.magsource
         });
     }
 
@@ -131,66 +162,35 @@ partial class Program
         // Display results to the console
         foreach (var result in results)
         {
-            Console.WriteLine($"{result.Time}, {result.Depth}, {result.Mag}, {result.Place}, {result.Type}, {result.LocationSource}\n");
+            Console.WriteLine($"Time: {result.time}; Depth: {result.depth}; Magnitude:{result.mag}; Location: {result.place}; Type: {result.type}; Source: {result.locationsource}\n");
             // Display other properties as needed
         }
     }
-    public class EQDBContext : DbContext
-    {
-        public DbSet<eq2000> eq2000 { get; set; }
-        public DbSet<eq2001> eq2001 { get; set; }
-        public DbSet<eq2002> eq2002 { get; set; }
-        public DbSet<eq2003> eq2003 { get; set; }
-        public DbSet<eq2004> eq2004 { get; set; }
-        public DbSet<eq2005> eq2005 { get; set; }
-        public DbSet<eq2006> eq2006 { get; set; }
-        public DbSet<eq2007> eq2007 { get; set; }
-        public DbSet<eq2008> eq2008 { get; set; }
-        public DbSet<eq2009> eq2009 { get; set; }
-        public DbSet<eq2010> eq2010 { get; set; }
-        public DbSet<eq2011> eq2011 { get; set; }
-        public DbSet<eq2012> eq2012 { get; set; }
-        public DbSet<eq2013> eq2013 { get; set; }
-        public DbSet<eq2014> eq2014 { get; set; }
-        public DbSet<eq2015> eq2015 { get; set; }
-        public DbSet<eq2016> eq2016 { get; set; }
-        public DbSet<eq2017> eq2017 { get; set; }
-        public DbSet<eq2018> eq2018 { get; set; }
-        public DbSet<eq2019> eq2019 { get; set; }
-        public DbSet<eq2020> eq2020 { get; set; }
-        public DbSet<eq2021> eq2021 { get; set; }
-        public DbSet<eq2022> eq2022 { get; set; }
-        public DbSet<eq2023> eq2023 { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseNpgsql("Host=localhost;Database=postgres;Username=postgres;Password=1891999Spicy;Port=5432;");
-        }
-    }
     public class EntityBase
     {
-        public DateTime Time { get; set; }
-        public decimal Latitude { get; set; }
-        public decimal Longitude { get; set; }
-        public decimal Depth { get; set; }
-        public decimal Mag { get; set; }
-        public string MagType { get; set; }
-        public int Nst { get; set; }
-        public decimal Gap { get; set; }
-        public decimal Dmin { get; set; }
-        public decimal Rms { get; set; }
-        public string Net { get; set; }
-        public string Id { get; set; }
-        public string Updated { get; set; }
-        public string Place { get; set; }
-        public string Type { get; set; }
-        public decimal? HorizontalError { get; set; }
-        public decimal DepthError { get; set; }
-        public decimal? MagError { get; set; }
-        public int? MagNst { get; set; }
-        public string Status { get; set; }
-        public string LocationSource { get; set; }
-        public string MagSource { get; set; }
+        public DateTime time { get; set; }
+        public decimal latitude { get; set; }
+        public decimal longitude { get; set; }
+        public decimal depth { get; set; }
+        public decimal mag { get; set; }
+        public string magtype { get; set; }
+        public int? nst { get; set; }
+        public decimal gap { get; set; }
+        public decimal dmin { get; set; }
+        public decimal rms { get; set; }
+        public string net { get; set; }
+        public string id { get; set; }
+        public string updated { get; set; }
+        public string place { get; set; }
+        public string type { get; set; }
+        public decimal horizontalerror { get; set; }
+        public decimal deptherror { get; set; }
+        public decimal? magerror { get; set; }
+        public int? magnst { get; set; }
+        public string status { get; set; }
+        public string locationsource { get; set; }
+        public string magsource { get; set; }
     }
     public class eq2000 : EntityBase { }
     public class eq2001 : EntityBase { }
